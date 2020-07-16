@@ -55,8 +55,8 @@ else
 
     # save sql
     printf "USE mysql;\n" >> $tmpfile
-    printf "FLUSH PRIVILEGES;\n" >> $tmpfile
     printf "DELETE FROM mysql.user;\n" >> $tmpfile
+    printf "FLUSH PRIVILEGES;\n" >> $tmpfile
     printf "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION;\n" >> $tmpfile
 
     # Create new database
@@ -102,7 +102,7 @@ echo '[i] CRON jobs initialized...'
 echo '[i] Starting all processes...'
 /usr/bin/mysqld --user=mysql --console &
 
-until mysqladmin ping &>/dev/null; do
+until mysqladmin ping -p$MYSQL_PASSWORD &>/dev/null; do
    echo -n '.'; sleep 0.2
 done
 
