@@ -5,7 +5,7 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 git fetch --tags
 git checkout $1
 
-if ! [[ $1 =~ ^v?[0-9\.]+$ ]]
+if ! echo "$1" | grep -E '^v?[0-9\.]+$';
 then
    git merge origin/$1
 fi
